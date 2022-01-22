@@ -1,4 +1,6 @@
+import 'package:courtlex/pages/clients_page.dart';
 import 'package:flutter/material.dart';
+import 'client_details.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
@@ -46,6 +48,12 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ClientsList()),
+                      );
+                    },
                     child: Container(
                       height: 100,
                       width: 100,
@@ -120,7 +128,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -526,9 +533,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 16),
                   ),
                 ),
-                Divider(
-                    color: Colors.black87
-                ),
+                Divider(color: Colors.black87),
                 ListTile(
                   title: Text(
                     "Other Information",
@@ -574,6 +579,26 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home,color: Colors.grey),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call,color: Colors.grey,),
+            label: 'Calls',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.schedule,color: Colors.grey),
+            label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat,color: Colors.grey),
+            label: 'Chats',
+          ),
+        ],
       ),
     );
   }
