@@ -4,7 +4,6 @@ import 'package:courtlex/models/clients.dart';
 import 'package:courtlex/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'client_form_page.dart';
 
 class ClientsList extends StatefulWidget {
@@ -42,7 +41,7 @@ class _ClientsListState extends State<ClientsList> {
               )
                   .then((_) => setState(() {}));
             },
-            heroTag: 'addBreed',
+           // heroTag: 'addBreed',
             child: FaIcon(FontAwesomeIcons.plus),
           ),
           SizedBox(height: 12.0),

@@ -24,8 +24,8 @@ class ClientBuilder extends StatelessWidget {
           child: ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              final breed = snapshot.data![index];
-              return _buildClientCard(breed, context);
+              final client = snapshot.data![index];
+              return _buildClientCard(client, context);
             },
           ),
         );
@@ -36,9 +36,10 @@ class ClientBuilder extends StatelessWidget {
   Widget _buildClientCard(Clients clients, BuildContext context) {
     return InkWell(
       onTap: (){
+        String clientName=clients.name;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const ClientDetailsPage()),
+          MaterialPageRoute(builder: (context) =>  ClientDetailsPage(client_name:clientName)),
         );
       },
       child: Card(
@@ -75,15 +76,15 @@ class ClientBuilder extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4.0),
-                    Text(clients.address),
-                    SizedBox(height: 4.0),
-                    Text(clients.city),
+                    //Text(clients.address),
+                    //SizedBox(height: 4.0),
+                    //Text(clients.city),
                     SizedBox(height: 4.0),
                     Text(clients.phone),
                     SizedBox(height: 4.0),
                     Text(clients.email),
-                    SizedBox(height: 4.0),
-                    Text(clients.remarks),
+                    //SizedBox(height: 4.0),
+                   //Text(clients.remarks),
                   ],
                 ),
               ),

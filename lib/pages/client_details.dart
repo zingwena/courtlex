@@ -6,13 +6,16 @@ import 'package:courtlex/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ClientDetailsPage extends StatefulWidget {
-  const ClientDetailsPage({Key? key}) : super(key: key);
+  final String client_name;
+  const ClientDetailsPage({ required this.client_name});
   @override
-  _ClientDetailsPageState createState() => _ClientDetailsPageState();
+  _ClientDetailsPageState createState() => _ClientDetailsPageState(client_name:client_name);
 }
 
 class _ClientDetailsPageState extends State<ClientDetailsPage> {
   final DatabaseService _databaseService = DatabaseService();
+  late final String client_name;
+  _ClientDetailsPageState({ required this.client_name,});
 
   Future<List<Dog>> _getDogs() async {
     return await _databaseService.dogs();
@@ -31,7 +34,18 @@ class _ClientDetailsPageState extends State<ClientDetailsPage> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Clients Details'),
+          title: Container(child: Column(
+            children: [
+              Text('Clients Details'),
+              Center(
+                child: Row(
+                  children: [
+                    Text(client_name)
+                  ],
+                ),
+              )
+            ],
+          )),
           centerTitle: true,
           bottom: TabBar(
             tabs: [
