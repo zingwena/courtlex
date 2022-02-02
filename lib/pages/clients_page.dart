@@ -1,10 +1,12 @@
 
 import 'package:courtlex/common_widgets/client_builder.dart';
 import 'package:courtlex/models/clients.dart';
+import 'package:courtlex/pages/home.dart';
 import 'package:courtlex/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'client_form_page.dart';
+import '../forms/client_form_page.dart';
+import '../forms/dog_form_page.dart';
 
 class ClientsList extends StatefulWidget {
   const ClientsList({Key? key}) : super(key: key);
@@ -22,6 +24,15 @@ class _ClientsListState extends State<ClientsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: (){
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage(title: "Courtlex Tech Diary")),
+            );
+          },
+        ),
         title: Text("Clients"),
       ),
       body: ClientBuilder(
@@ -44,8 +55,8 @@ class _ClientsListState extends State<ClientsList> {
            // heroTag: 'addBreed',
             child: FaIcon(FontAwesomeIcons.plus),
           ),
-          SizedBox(height: 12.0),
-          /* FloatingActionButton(
+        /*  SizedBox(height: 12.0),
+          FloatingActionButton(
               onPressed: () {
                 Navigator.of(context)
                     .push(

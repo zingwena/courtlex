@@ -1,6 +1,9 @@
+
 import 'package:courtlex/models/clients.dart';
 import 'package:courtlex/pages/client_details.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+import 'dart:math';
 
 class ClientBuilder extends StatelessWidget {
   const ClientBuilder({
@@ -8,10 +11,9 @@ class ClientBuilder extends StatelessWidget {
     required this.future,
   }) : super(key: key);
   final Future<List<Clients>> future;
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Clients>>(
+    return   FutureBuilder<List<Clients>>(
       future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -19,7 +21,7 @@ class ClientBuilder extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        return Padding(
+        return  Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.builder(
             itemCount: snapshot.data!.length,
@@ -34,12 +36,27 @@ class ClientBuilder extends StatelessWidget {
   }
 
   Widget _buildClientCard(Clients clients, BuildContext context) {
-    return InkWell(
-      onTap: (){
-        String clientName=clients.name;
-        Navigator.pushReplacement(
+    return  InkWell(
+      onTap: () {
+        String clientName = clients.name;
+        String clientAddress = clients.address;
+        String clientCity = clients.city;
+        String clientPhone = clients.phone;
+        String clientEmail = clients.email;
+        String clientRemarks = clients.remarks;
+
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>  ClientDetailsPage(client_name:clientName)),
+          MaterialPageRoute(builder: (context) =>
+              ClientDetailsPage(
+                  client_name: clientName,
+                  client_address:clientAddress,
+                  client_city:clientCity,
+                  client_phone:clientPhone,
+                  client_email:clientEmail,
+                  client_remarks:clientRemarks, client: clients,
+
+              )),
         );
       },
       child: Card(
@@ -52,7 +69,7 @@ class ClientBuilder extends StatelessWidget {
                 width: 40.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.grey[300],
+                    color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
                 ),
                 alignment: Alignment.center,
                 child: Text(
@@ -84,7 +101,7 @@ class ClientBuilder extends StatelessWidget {
                     SizedBox(height: 4.0),
                     Text(clients.email),
                     //SizedBox(height: 4.0),
-                   //Text(clients.remarks),
+                    //Text(clients.remarks),
                   ],
                 ),
               ),

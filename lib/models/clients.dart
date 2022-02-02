@@ -46,5 +46,5 @@ class Clients{
   // Implement toString to make it easier to see information about
   // each breed when using the print statement.
   @override
-  String toString() => 'Clients(id: $id, name: $name,address:$address, city:$city, phone:$phone, email:$email, remarks:$remarks)';
+  String toString() => 'Client(id: $id, name: $name,address:$address, city:$city, phone:$phone, email:$email, remarks:$remarks)';
 }

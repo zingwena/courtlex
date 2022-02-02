@@ -1,37 +1,51 @@
 import 'package:flutter/material.dart';
 
 class ClientSelector extends StatelessWidget {
-  const ClientSelector({
+   ClientSelector({
     Key? key,
-    required this.breeds,
-    required this.selectedIndex,
-    required this.onChanged,
+    required this.clients,
+    //required this.selectedIndex,
+   // required this.onChanged,
   }) : super(key: key);
-  final List<String> breeds;
-  final int selectedIndex;
-  final Function(int) onChanged;
+  final List<String> clients;
+  //final int selectedIndex;
+  //final Function(int) onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Select breed',
-          style: TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        SizedBox(height: 12.0),
         Container(
-          height: 40.0,
-          child: ListView.builder(
+          child: SingleChildScrollView(
+            child: DropdownButtonFormField<String>(
+              hint:Text(
+                'Select Client',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              items: clients.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+
+              },
+            ),
+          ),
+          /* child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: breeds.length,
+            itemCount: clients.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () => onChanged(index),
+                onTap: () {
+                   onChanged(index);
+                  // print(clients);
+                },
                 child: Container(
                   height: 40.0,
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -45,11 +59,11 @@ class ClientSelector extends StatelessWidget {
                           selectedIndex == index ? Colors.teal : Colors.black,
                     ),
                   ),
-                  child: Text(breeds[index]),
+                  child: Text(clients[index]),
                 ),
               );
             },
-          ),
+          ),*/
         ),
       ],
     );

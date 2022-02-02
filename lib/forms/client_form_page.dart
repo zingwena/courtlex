@@ -99,7 +99,7 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 child: ElevatedButton(
                   onPressed: _onSave,
                   child: Text(
-                    'Save the Breed',
+                    'Save the Client',
                     style: TextStyle(
                       fontSize: 16.0,
                     ),

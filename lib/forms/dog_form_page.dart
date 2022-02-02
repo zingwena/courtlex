@@ -124,13 +124,13 @@ class _DogFormPageState extends State<DogFormPage> {
                   return Text("Loading breeds...");
                 }
                 return ClientSelector(
-                  breeds: _breeds.map((e) => e.name).toList(),
-                  selectedIndex: _selectedBreed,
-                  onChanged: (value) {
+                  clients: _breeds.map((e) => e.name).toList(),
+                 // selectedIndex: _selectedBreed,
+                  /*onChanged: (value) {
                     setState(() {
                       _selectedBreed = value;
                     });
-                  },
+                  },*/
                 );
               },
             ),

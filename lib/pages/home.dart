@@ -1,6 +1,6 @@
+import 'package:courtlex/pages/cases_page.dart';
 import 'package:courtlex/pages/clients_page.dart';
 import 'package:flutter/material.dart';
-import 'client_details.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
@@ -78,6 +78,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const CasesPage()),
+                      );
+                    },
                     child: Container(
                       height: 100,
                       width: 100,
