@@ -5,8 +5,6 @@ import 'package:courtlex/models/clients.dart';
 import 'package:courtlex/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path/path.dart';
-
 import 'home.dart';
 
 class CasesPage extends StatefulWidget {
@@ -24,7 +22,7 @@ class _CasesPageState extends State<CasesPage> {
     return await _databaseService.cases();
   }
   int _selectedClient = 0;
-  late final Future? future;
+  //late final Future? future;
   @override
   void initState() {
     // TODO: implement initState
@@ -33,11 +31,13 @@ class _CasesPageState extends State<CasesPage> {
   }
   Future<List<Clients>> _getClients() async {
     final clients = await _databaseService.clients();
-    if (_clients.length == 0) _clients.addAll(clients);
+    if (_clients.length == 0)
+      _clients.addAll(clients);
     if (widget.cases != null) {
       _selectedClient =
           _clients.indexWhere((e) => e.id == widget.cases!.clientId);
     }
+    //print(clients.map((e) => e.name).toList());
     return _clients.toList();
   }
 
@@ -64,7 +64,7 @@ class _CasesPageState extends State<CasesPage> {
       ),
         floatingActionButton:
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          /*FutureBuilder<List<Clients>>(
+          FutureBuilder<List<Clients>>(
             future: _getClients(),
             builder: (context, snapshot) {
               //print(_getClients);
@@ -75,10 +75,11 @@ class _CasesPageState extends State<CasesPage> {
                clients: _clients.map((e) => e.name).toList(),
              );
             },
-          ),*/
+          ),
           FloatingActionButton(
             onPressed: () {
-              //print( _clients.map((e) => e.id).toList());
+           // _getClients();
+              //print( _clients.map((e) => e.name).toList());
               Navigator.of(context)
                   .push(
                 MaterialPageRoute(
@@ -89,6 +90,7 @@ class _CasesPageState extends State<CasesPage> {
                 ),
               )
                   .then((_) => setState(() {}));
+
             },
             // heroTag: 'addBreed',
             child: FaIcon(FontAwesomeIcons.plus),

@@ -268,108 +268,120 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            SingleChildScrollView(
+              child: Container(
+                color: Colors.white70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        height: 90.0,
+                        width: 90.0,
+                        child: Card(
+                          semanticContainer: true,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "1",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 30.0),
+                              ),
+                              Text(
+                                "Open",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey),
+                              ),
+                              Text(
+                                "Cases",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: 90.0,
+                        width: 90.0,
+                        child: Card(
+                          semanticContainer: true,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "1",
+                                style: TextStyle(
+                                    color: Colors.blueAccent, fontSize: 30.0),
+                              ),
+                              Text(
+                                "Schedule",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey),
+                              ),
+                              Text(
+                                "Today",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        debugPrint("yes ");
+                      },
+                      splashColor: Colors.blueGrey,
+                      child: Container(
+                        height: 90.0,
+                        width: 90.0,
+                        child: Card(
+                          semanticContainer: true,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "1",
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 30.0),
+                              ),
+                              Text(
+                                "Clients",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                              ),
+                              Text(
+                                "Added",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
             Container(
               color: Colors.white70,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
+
                 children: [
-                  InkWell(
-                    child: Container(
-                      height: 90.0,
-                      width: 90.0,
-                      child: Card(
-                        semanticContainer: true,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "1",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 30.0),
-                            ),
-                            Text(
-                              "Open",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey),
-                            ),
-                            Text(
-                              "Cases",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    child: Container(
-                      height: 90.0,
-                      width: 90.0,
-                      child: Card(
-                        semanticContainer: true,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "1",
-                              style: TextStyle(
-                                  color: Colors.blueAccent, fontSize: 30.0),
-                            ),
-                            Text(
-                              "Schedule",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey),
-                            ),
-                            Text(
-                              "Today",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      debugPrint("yes ");
-                    },
-                    splashColor: Colors.blueGrey,
-                    child: Container(
-                      height: 90.0,
-                      width: 90.0,
-                      child: Card(
-                        semanticContainer: true,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "1",
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 30.0),
-                            ),
-                            Text(
-                              "Clients",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            ),
-                            Text(
-                              "Added",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                   InkWell(
                     onTap: () {
                       debugPrint("yes");
@@ -386,7 +398,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               "1",
                               style:
-                                  TextStyle(color: Colors.red, fontSize: 30.0),
+                              TextStyle(color: Colors.red, fontSize: 30.0),
                             ),
                             Text(
                               "Cases",
@@ -407,7 +419,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -1,4 +1,6 @@
 import 'package:courtlex/common_widgets/client_selector.dart';
+import 'package:courtlex/pages/cases_page.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:courtlex/models/case.dart';
 import 'package:courtlex/services/database_service.dart';
@@ -17,14 +19,15 @@ class AddCaseDetailsForm extends StatefulWidget {
 
 class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
     with SingleTickerProviderStateMixin {
+
   late final _tabController = TabController(length: 4, vsync: this);
+  bool priceupdate_value = false;
+  final List<String> statusList = ["OPEN", "CLOSED"];
 
   // static final  List<Clients> _clients =[];
   List<String>? clients;
 
   _AddCaseDetailsFormState({this.clients});
-
-  int _selectedClient = 0;
 
   //case basic details controllers
   final TextEditingController _caseName = TextEditingController();
@@ -49,43 +52,71 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
   TextEditingController _courtName = TextEditingController();
   final TextEditingController _courtCity = TextEditingController();
   TextEditingController _judgeName = TextEditingController();
+  TextEditingController _typedLawFirm = TextEditingController();
 
-  String case_status='';
-  String selected_client='';
-  int client_id=0;
+  String case_status = '';
+  String selected_client = '';
+  String clientLawyer = '';
+  String selectedLawfirm = '';
+
+  int client_id = 0;
   DateTime selectedDate = DateTime.now();
   final DatabaseService _databaseService = DatabaseService();
 
   Future<void> _onSave() async {
-    final status=case_status;
-    final clientID=client_id;
-    final client=selected_client;
+    final status = case_status;
+    final client_lawyer = clientLawyer;
+    final clientID = client_id;
     final caseName = _caseName.text;
-    final caseNumber=_caseNumber.text;
+    final caseNumber = _caseNumber.text;
     final caseRemarks = _caseRemarks.text;
     final date = selectedDate.toString();
 
     final caseType = _caseType.text;
-    final caseFee=_caseFees.text;
-    final caseCharge=_caseCharges.text;
-    final casePetitioner=_casePetitioner.text;
-    final caseResponder= _caseResponder.text;
-    final caseDescription =_caseDescription.text;
+    final caseFee = _caseFees.text;
+    final caseCharge = _caseCharges.text;
+    final casePetitioner = _casePetitioner.text;
+    final caseResponder = _caseResponder.text;
+    final caseDescription = _caseDescription.text;
 
-    final opponentName=_opponentName.text;
-    final opponentLawyer=_opponentLawyer.text;
-    final opponentContact=_opponentContactNumber.text;
+    final opponentName = _opponentName.text;
+    final opponentLawyer = _opponentLawyer.text;
+    final opponentContact = _opponentContactNumber.text;
 
-    final courtName=_courtName.text;
-    final courtCity=_courtCity.text;
-    final judge=_judgeName.text;
-
-      await _databaseService.insertCase(Cases(
-          caseStatus: status, clientId: clientID,caseName: caseName, caseNumber: caseNumber,
-      caseDate: date, caseRemarks: caseRemarks,caseType: caseType, caseFee: caseFee, caseCharges: caseCharge,
-          casePetitioner: casePetitioner,caseResponder: caseResponder,caseDescription: caseDescription, opponentName: opponentName,
-        opponentLawyer: opponentLawyer, opponentContact: opponentContact, courtName: courtName,courtCity: courtCity,judgeName: judge
-      ));
+    final courtName = _courtName.text;
+    final courtCity = _courtCity.text;
+    var firm;
+    if (selectedLawfirm == "") {
+      setState(() {
+        firm = _typedLawFirm.text;
+      });
+    } else {
+      setState(() {
+        firm = selectedLawfirm;
+      });
+    }
+    final judge = _judgeName.text;
+    await _databaseService.insertCase(Cases(
+        caseStatus: status,
+        clientId: clientID,
+        caseName: caseName,
+        caseNumber: caseNumber,
+        caseDate: date,
+        caseRemarks: caseRemarks,
+        caseType: caseType,
+        caseFee: caseFee,
+        caseCharges: caseCharge,
+        casePetitioner: casePetitioner,
+        caseResponder: caseResponder,
+        caseDescription: caseDescription,
+        opponentName: opponentName,
+        opponentLawyer: opponentLawyer,
+        opponentContact: opponentContact,
+        courtName: courtName,
+        lawyer: client_lawyer,
+        lawFirm: firm,
+        courtCity: courtCity,
+        judgeName: judge));
     Navigator.pop(context);
   }
 
@@ -97,9 +128,11 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
     }
     return _clients.toList();
   }*/
+  int _selectedClient = 0;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     _datePicked = new TextEditingController(
         text: selectedDate.toString().substring(0, 10));
@@ -123,6 +156,15 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => CasesPage()),
+            );
+          },
+        ),
         title: Text('Add new Case'),
         centerTitle: true,
         bottom: TabBar(
@@ -221,50 +263,75 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DropdownButtonFormField<String>(
-                  hint: Text("Case Status"),
-                  items: <String>["OPEN", "CLOSE"].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                SizedBox(height: 16.0),
+                DropdownSearch<String>(
+                  mode: Mode.MENU,
+                  showSelectedItems: true,
+                  items: statusList,
+                  label: "Select Case Status",
+                  hint: "country in menu mode",
                   onChanged: (String? newValue) {
                     setState(() {
                       case_status = newValue!;
                     });
                   },
+                  selectedItem: case_status,
                 ),
+                        SizedBox(height: 16.0),
+
+                DropdownSearch<String>(
+          maxHeight: 500,
+          mode: Mode.MENU,
+          showSelectedItems: true,
+          items: clients!.toList(),
+          //items: snapshot.data!.map((e) => e.name).toList(),
+          label: "Select Client",
+          hint: "country in menu mode",
+          //popupItemDisabled: (String s) => s.startsWith('I'),
+          onChanged: ( newValue) {
+            setState(() {
+              selected_client = newValue!;
+              //_selectedClient=snapshot.data!.map((e) => e.name).toList().indexOf(newValue);
+              _selectedClient = clients!.indexOf(newValue);
+              print(_selectedClient);
+
+            });
+          },
+          selectedItem: selected_client,
+        ),
                 SizedBox(height: 16.0),
-                SingleChildScrollView(
-                  child: DropdownButtonFormField<String>(
-                    hint: Text(
-                      'Select Client',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    items: clients!.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
+                FutureBuilder<List<Clients>>(
+                    //future: _getClients(),
+                    builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading breeds...");
+                  }
+                  return DropdownSearch<String>(
+                    maxHeight: 500,
+                    mode: Mode.MENU,
+                    showSelectedItems: true,
+                    items: clients!.toList(),
+                    //items: snapshot.data!.map((e) => e.name).toList(),
+                    label: "Select Client",
+                    hint: "country in menu mode",
+                    //popupItemDisabled: (String s) => s.startsWith('I'),
+                    onChanged: (newValue) {
                       setState(() {
-                        client_id=clients!.indexOf(newValue!).toInt()+1;
-                        selected_client = newValue;
+                        selected_client = newValue!;
+                        //_selectedClient=snapshot.data!.map((e) => e.name).toList().indexOf(newValue);
+                        _selectedClient = clients!.indexOf(newValue) + 1;
+                        print(_selectedClient);
                       });
                     },
-                  ),
-                ),
+                    selectedItem: selected_client,
+                  );
+                }),
                 SizedBox(height: 16.0),
                 TextField(
                   controller: _caseName,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Name ',
+                    labelText: 'Case Name',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -272,7 +339,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseNumber,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Number',
+                    labelText: 'Case Number',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -285,6 +352,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _datePicked,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
+                    labelText: 'Case Date',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -292,7 +360,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseRemarks,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Enter Case Remarks',
+                    labelText: 'Case Remarks',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -359,7 +427,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseType,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Type ',
+                    labelText: 'Case Type',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -367,7 +435,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseFees,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Fees ',
+                    labelText: 'Case Fees',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -375,7 +443,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseCharges,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Charges ',
+                    labelText: 'Case Charges',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -383,7 +451,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _casePetitioner,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Petitioner',
+                    labelText: 'Case Petitioner',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -391,7 +459,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseResponder,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Responder',
+                    labelText: 'Case Responder',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -399,7 +467,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _caseDescription,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Case Description',
+                    labelText: 'Case Description',
                   ),
                 ),
                 Row(
@@ -424,7 +492,6 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                     ElevatedButton(
                       onPressed: () {
                         _tabController.index = 2;
-
                       },
                       child: Row(
                         children: [
@@ -467,7 +534,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _opponentName,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Opponent Name ',
+                    labelText: 'Opponent Name',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -475,7 +542,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _opponentLawyer,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Opponent Lawyer',
+                    labelText: 'Opponent Lawyer',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -483,7 +550,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _opponentContactNumber,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Opponent Contact Number',
+                    labelText: 'Opponent Contact Number',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -550,7 +617,7 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _courtName,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Court Name ',
+                    labelText: 'Court Name',
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -558,15 +625,67 @@ class _AddCaseDetailsFormState extends State<AddCaseDetailsForm>
                   controller: _courtCity,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Court City',
+                    labelText: 'Court City',
                   ),
                 ),
+                SizedBox(height: 16.0),
+              /*  DropdownSearch<String>(
+                  mode: Mode.MENU,
+                  showSelectedItems: true,
+                  items: lawyersList,
+                  label: "Select Lawyer",
+                  hint: "country in menu mode",
+                  //popupItemDisabled: (String s) => s.startsWith('I'),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      clientLawyer = newValue!;
+                    });
+                  },
+                  selectedItem: clientLawyer,
+                ),
+                SizedBox(height: 16.0),
+                if (priceupdate_value == false)
+                  DropdownSearch<String>(
+                    mode: Mode.MENU,
+                    showSelectedItems: true,
+                    items: lawfirmList,
+                    label: "Select LawFirm",
+                    hint: "country in menu mode",
+                    dropdownBuilderSupportsNullItem: true,
+                    //popupItemDisabled: (String s) => s.startsWith('I'),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedLawfirm = newValue!;
+                      });
+                    },
+                    selectedItem: selectedLawfirm,
+                  ),
+                SizedBox(height: 16.0),*/
+                CheckboxListTile(
+                  title: Text("No Lawfirm found ?"),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: priceupdate_value,
+                  onChanged: (bool? priceupdateValue) {
+                    setState(() {
+                      priceupdate_value = priceupdateValue!;
+                      selectedLawfirm = "";
+                    });
+                  },
+                ),
+                if (priceupdate_value)
+                  TextField(
+                    controller: _typedLawFirm,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Law Firm',
+                    ),
+                  ),
                 SizedBox(height: 16.0),
                 TextField(
                   controller: _judgeName,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Judge Name',
+                    labelText: 'Judge Name',
                   ),
                 ),
                 SizedBox(height: 16.0),

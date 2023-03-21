@@ -49,7 +49,7 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 controller: _nameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter name ',
+                  labelText: "Client Name",
                 ),
               ),
               SizedBox(height: 16.0),
@@ -57,7 +57,7 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 controller: _addressController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Address',
+                  labelText: "Client Address",
                 ),
               ),
               SizedBox(height: 16.0),
@@ -65,7 +65,7 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 controller: _cityController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter city',
+                  labelText: "Client City",
                 ),
               ),
               SizedBox(height: 16.0),
@@ -74,7 +74,8 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 controller: _phoneController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter phone',
+                  labelText: "Client Phone",
+
                 ),
               ),
               SizedBox(height: 16.0),
@@ -82,7 +83,7 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter email',
+                  labelText: "Client Email",
                 ),
               ),
               SizedBox(height: 16.0),
@@ -90,7 +91,8 @@ class _AddClientFormPageState extends State<AddClientFormPage> {
                 controller: _remarksController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Remarks',
+                  labelText: "Remarks",
+
                 ),
               ),
               SizedBox(height: 16.0),

@@ -37,7 +37,7 @@ class DatabaseService {
     await db.execute(
       'CREATE TABLE cases(id INTEGER PRIMARY KEY, status TEXT, caseName TEXT, caseNumber TEXT, caseDate TEXT, '
           'caseRemarks TEXT, caseType TEXT, caseCharges TEXT, caseFee TEXT, casePetitioner TEXT, caseResponder TEXT, caseDescription TEXT, opponentName TEXT, opponentLawyer TEXT, opponentContact TEXT, courtName TEXT,'
-          'courtCity TEXT, judgeName TEXT , clientId INTEGER, FOREIGN KEY (clientId) REFERENCES clients(id) ON DELETE SET NULL)',
+          'courtCity TEXT,clientLawyer TEXT, lawFirm TEXT, judgeName TEXT , clientId INTEGER, FOREIGN KEY (clientId) REFERENCES clients(id) ON DELETE SET NULL)',
     );
 
   }

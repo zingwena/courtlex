@@ -19,7 +19,9 @@ class Cases {
   final String opponentLawyer;
   final String opponentContact;
   final String courtName;
+  final String lawyer;
   final String courtCity;
+  final String lawFirm;
   final String judgeName;
 
 
@@ -41,6 +43,8 @@ class Cases {
     required this.opponentLawyer,
     required this.opponentContact,
     required this.courtName,
+    required this.lawyer,
+    required this.lawFirm,
     required this.courtCity,
     required this.judgeName,
   });
@@ -66,6 +70,8 @@ class Cases {
       'opponentLawyer': opponentLawyer,
       'opponentContact':opponentContact,
       'courtName': courtName,
+      'clientLawyer': lawyer,
+      'lawFirm': lawFirm,
       'courtCity':courtCity,
       'judgeName': judgeName,
     };
@@ -90,6 +96,8 @@ class Cases {
       opponentLawyer: map['opponentLawyer'] ?? '',
       opponentContact: map['opponentContact'] ?? '',
       courtName: map['courtName'] ?? '',
+      lawyer: map['courtName'] ?? '',
+      lawFirm: map['lawFirm'] ?? '',
       courtCity: map['courtCity'] ?? '',
       judgeName: map['judgeName'] ?? '',
     );
@@ -106,6 +114,6 @@ class Cases {
     return 'Case(id: $id, caseStatus: $caseStatus, clientId: $clientId, caseName: $caseName, caseNumber: $caseNumber,'
         'caseDate:$caseDate, caseRemarks:$caseRemarks,caseType:$caseType,caseFee:$caseFee,caseCharges:$caseCharges, '
         'casePetitioner:$casePetitioner, caseResponder:$caseResponder,caseDescription:$caseDescription,opponentName:$opponentName,'
-        'opponentLawyer:$opponentLawyer,opponentContact:$opponentContact,courtName:$courtName,courtCity:$courtCity,judgeName:$judgeName)';
+        'opponentLawyer:$opponentLawyer,opponentContact:$opponentContact,courtName:$courtName,lawyer:$lawyer, lawFirm:$lawFirm,courtCity:$courtCity,judgeName:$judgeName)';
   }
 }

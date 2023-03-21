@@ -2,8 +2,7 @@
 import 'package:courtlex/models/clients.dart';
 import 'package:courtlex/pages/client_details.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-import 'dart:math';
+
 
 class ClientBuilder extends StatelessWidget {
   const ClientBuilder({
@@ -54,7 +53,8 @@ class ClientBuilder extends StatelessWidget {
                   client_city:clientCity,
                   client_phone:clientPhone,
                   client_email:clientEmail,
-                  client_remarks:clientRemarks, client: clients,
+                  client_remarks:clientRemarks,
+                client: clients,
 
               )),
         );
@@ -69,11 +69,12 @@ class ClientBuilder extends StatelessWidget {
                 width: 40.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                    color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+                    color: Colors.grey,
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  clients.id.toString(),
+                  clients.name.toString().substring(0, 1).toUpperCase(),
+                  //clients.id.toString(),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
